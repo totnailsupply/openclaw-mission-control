@@ -4,10 +4,12 @@ A real-time, high-performance dashboard for managing autonomous agents and compl
 
 ## ✨ Features
 
-- 🚀 **Real-time Synchronization**: Powered by Convex, every change (task moves, agent updates, comments) propagates instantly to all connected clients.
-- 🤖 **Agent Oversight**: Monitor the status and activity of your agent roster (Jarvis, Friday, Shuri, etc.) in real-time.
-- 📦 **Mission Queue**: A kanban-style overview of tasks categorized by status: Inbox, Assigned, In Progress, Review, and Done.
-- 📡 **Live Activity Feed**: A streaming log of all operational events, comments, and status changes.
+- 🚀 **Real-time Synchronization**: Powered by Convex, every change (task moves, agent updates, comments, document creation) propagates instantly to all connected clients.
+- 🤖 **Agent Oversight**: Monitor the status and activity of your agent roster in real-time, with live counts in the header.
+- 📦 **Mission Queue**: A kanban-style overview of tasks categorized by status: Inbox, Assigned, In Progress, Review, and Done, with selection-driven detail views.
+- 🧭 **Task Detail Panel**: Inspect and edit task status, descriptions, and assignees, plus quick actions like “Mark as Done” and task ID copy.
+- 🧾 **Resources & Deliverables**: Task-linked documents show up as structured resources with type and path metadata.
+- 💬 **Comments & Activity**: Comment tracking and a live activity feed with filters for tasks, comments, docs, and status updates.
 - 🔐 **Secure Access**: Integrated Convex Auth for secure terminal login and management.
 - 📱 **Responsive Design**: Premium, centered layout that works seamlessly across all devices.
 
@@ -50,3 +52,6 @@ npx convex run seed:run
 
 *Mission Control // Secure Terminal Access // Ref: 2026*
 
+## 🌟 GitHub Stars
+
+![Star History](https://api.star-history.com/svg?repos=manish-raana/openclaw-mission-control&type=Date)
