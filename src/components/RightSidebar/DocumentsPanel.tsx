@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
+import { DEFAULT_TENANT_ID } from "../../lib/tenant";
 
 const typeFilters = [
   { id: "all", label: "All" },
@@ -28,10 +29,11 @@ const DocumentsPanel: React.FC<DocumentsPanelProps> = ({
   >(undefined);
 
   const documents = useQuery(api.documents.listAll, {
+    tenantId: DEFAULT_TENANT_ID,
     type: selectedType === "all" ? undefined : selectedType,
     agentId: selectedAgentId,
   });
-  const agents = useQuery(api.queries.listAgents);
+  const agents = useQuery(api.queries.listAgents, { tenantId: DEFAULT_TENANT_ID });
 
   const handleDocumentClick = (docId: Id<"documents">) => {
     if (selectedDocumentId === docId) {

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { DEFAULT_TENANT_ID } from "../lib/tenant";
 
 type AddAgentModalProps = {
 	onClose: () => void;
@@ -27,16 +28,17 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 			setSubmitting(true);
 
 			try {
-				await createAgent({
-					name: name.trim(),
-					role: role.trim() || "Agent",
+					await createAgent({
+						name: name.trim(),
+						role: role.trim() || "Agent",
 					level,
 					avatar: avatar.trim() || "🤖",
 					status,
-					systemPrompt: systemPrompt.trim() || undefined,
-					character: character.trim() || undefined,
-					lore: lore.trim() || undefined,
-				});
+						systemPrompt: systemPrompt.trim() || undefined,
+						character: character.trim() || undefined,
+						lore: lore.trim() || undefined,
+						tenantId: DEFAULT_TENANT_ID,
+					});
 				onCreated();
 			} catch {
 				setSubmitting(false);

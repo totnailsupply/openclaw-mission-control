@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
+import { DEFAULT_TENANT_ID } from "../lib/tenant";
 
 type AgentDetailTrayProps = {
 	agentId: Id<"agents"> | null;
@@ -9,7 +10,7 @@ type AgentDetailTrayProps = {
 };
 
 const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) => {
-	const agents = useQuery(api.queries.listAgents);
+	const agents = useQuery(api.queries.listAgents, { tenantId: DEFAULT_TENANT_ID });
 	const updateAgent = useMutation(api.agents.updateAgent);
 
 	const agent = agents?.find((a) => a._id === agentId) ?? null;
@@ -43,17 +44,18 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 		if (!agentId) return;
 		setSaving(true);
 		try {
-			await updateAgent({
-				id: agentId,
+				await updateAgent({
+					id: agentId,
 				name: editName,
 				role: editRole,
 				level: editLevel,
 				avatar: editAvatar,
 				status: editStatus,
-				systemPrompt: editSystemPrompt,
-				character: editCharacter,
-				lore: editLore,
-			});
+					systemPrompt: editSystemPrompt,
+					character: editCharacter,
+					lore: editLore,
+					tenantId: DEFAULT_TENANT_ID,
+				});
 			setIsEditing(false);
 		} finally {
 			setSaving(false);

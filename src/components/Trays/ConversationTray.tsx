@@ -3,6 +3,7 @@ import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import Markdown from "react-markdown";
+import { DEFAULT_TENANT_ID } from "../../lib/tenant";
 
 type ConversationTrayProps = {
   documentId: Id<"documents">;
@@ -17,6 +18,7 @@ const ConversationTray: React.FC<ConversationTrayProps> = ({
 }) => {
   const documentContext = useQuery(api.documents.getWithContext, {
     documentId,
+    tenantId: DEFAULT_TENANT_ID,
   });
 
   if (!documentContext) {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SignOutButton from "./Signout";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { DEFAULT_TENANT_ID } from "../lib/tenant";
 
 type HeaderProps = {
 	onOpenAgents?: () => void;
@@ -12,8 +13,8 @@ const Header: React.FC<HeaderProps> = ({ onOpenAgents, onOpenLiveFeed }) => {
 	const [time, setTime] = useState(new Date());
 	
 	// Fetch data for dynamic counts
-	const agents = useQuery(api.queries.listAgents);
-	const tasks = useQuery(api.queries.listTasks);
+	const agents = useQuery(api.queries.listAgents, { tenantId: DEFAULT_TENANT_ID });
+	const tasks = useQuery(api.queries.listTasks, { tenantId: DEFAULT_TENANT_ID });
 
 	// Calculate counts
 	const activeAgentsCount = agents ? agents.filter(a => a.status === "active").length : 0;

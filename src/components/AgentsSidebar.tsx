@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { DEFAULT_TENANT_ID } from "../lib/tenant";
 
 type AgentsSidebarProps = {
 	isOpen?: boolean;
@@ -17,7 +18,7 @@ const AgentsSidebar: React.FC<AgentsSidebarProps> = ({
 	onAddAgent,
 	onSelectAgent,
 }) => {
-	const agents = useQuery(api.queries.listAgents);
+	const agents = useQuery(api.queries.listAgents, { tenantId: DEFAULT_TENANT_ID });
 	const updateStatus = useMutation(api.agents.updateStatus);
 	const deleteAgent = useMutation(api.agents.deleteAgent);
 
@@ -102,7 +103,7 @@ const AgentsSidebar: React.FC<AgentsSidebarProps> = ({
 							onClick={(e) => {
 								e.stopPropagation();
 								if (confirm(`Delete ${agent.name}?`)) {
-									deleteAgent({ id: agent._id });
+										deleteAgent({ id: agent._id, tenantId: DEFAULT_TENANT_ID });
 								}
 							}}
 							className="absolute left-1 top-1 opacity-0 group-hover:opacity-100 transition-opacity inline-flex h-[22px] w-[22px] items-center justify-center rounded hover:bg-[var(--accent-red)]/10 text-[var(--accent-red)] z-10"
@@ -138,10 +139,11 @@ const AgentsSidebar: React.FC<AgentsSidebarProps> = ({
 								type="button"
 								onClick={(e) => {
 									e.stopPropagation();
-									updateStatus({
-										id: agent._id,
-										status: agent.status === "active" ? "idle" : "active",
-									});
+										updateStatus({
+											id: agent._id,
+											status: agent.status === "active" ? "idle" : "active",
+											tenantId: DEFAULT_TENANT_ID,
+										});
 								}}
 								className={`text-[9px] font-bold flex items-center gap-1 tracking-wider uppercase cursor-pointer hover:opacity-70 transition-opacity ${
 									agent.status === "active"

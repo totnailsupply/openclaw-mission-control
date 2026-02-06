@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
+import { DEFAULT_TENANT_ID } from "../lib/tenant";
 
 const STATUS_OPTIONS = [
 	{ value: "inbox", label: "Inbox" },
@@ -29,7 +30,7 @@ type AddTaskModalProps = {
 };
 
 const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose, onCreated, initialAssigneeId }) => {
-	const agents = useQuery(api.queries.listAgents);
+	const agents = useQuery(api.queries.listAgents, { tenantId: DEFAULT_TENANT_ID });
 	const createTask = useMutation(api.tasks.createTask);
 	const updateAssignees = useMutation(api.tasks.updateAssignees);
 
@@ -67,22 +68,24 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose, onCreated, initial
 			setSubmitting(true);
 
 			try {
-				const taskId = await createTask({
-					title: title.trim(),
-					description: description.trim() || title.trim(),
-					status,
-					tags,
-					borderColor: borderColor || undefined,
-				});
+					const taskId = await createTask({
+						title: title.trim(),
+						description: description.trim() || title.trim(),
+						status,
+						tags,
+						borderColor: borderColor || undefined,
+						tenantId: DEFAULT_TENANT_ID,
+					});
 
 				if (assigneeId && agents) {
 					const agent = agents.find((a) => a._id === assigneeId);
 					if (agent) {
-						await updateAssignees({
-							taskId,
-							assigneeIds: [assigneeId as Id<"agents">],
-							agentId: agent._id,
-						});
+							await updateAssignees({
+								taskId,
+								assigneeIds: [assigneeId as Id<"agents">],
+								agentId: agent._id,
+								tenantId: DEFAULT_TENANT_ID,
+							});
 					}
 				}
 

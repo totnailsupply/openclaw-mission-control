@@ -3,6 +3,7 @@ import { useQuery, useMutation, useConvex } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { IconArchive } from "@tabler/icons-react";
+import { DEFAULT_TENANT_ID } from "../lib/tenant";
 import {
 	DndContext,
 	DragOverlay,
@@ -63,8 +64,8 @@ interface MissionQueueProps {
 }
 
 const MissionQueue: React.FC<MissionQueueProps> = ({ selectedTaskId, onSelectTask }) => {
-	const tasks = useQuery(api.queries.listTasks);
-	const agents = useQuery(api.queries.listAgents);
+	const tasks = useQuery(api.queries.listTasks, { tenantId: DEFAULT_TENANT_ID });
+	const agents = useQuery(api.queries.listAgents, { tenantId: DEFAULT_TENANT_ID });
 	const archiveTask = useMutation(api.tasks.archiveTask);
 	const updateStatus = useMutation(api.tasks.updateStatus);
 	const linkRun = useMutation(api.tasks.linkRun);
@@ -117,17 +118,22 @@ const MissionQueue: React.FC<MissionQueueProps> = ({ selectedTaskId, onSelectTas
 		const task = tasks.find((t) => t._id === taskId);
 
 		if (task && task.status !== newStatus) {
-			await updateStatus({
-				taskId,
-				status: newStatus,
-				agentId: currentUserAgent._id,
-			});
+				await updateStatus({
+					taskId,
+					status: newStatus,
+					agentId: currentUserAgent._id,
+					tenantId: DEFAULT_TENANT_ID,
+				});
 		}
 	};
 
 	const handleArchive = (taskId: Id<"tasks">) => {
 		if (currentUserAgent) {
-			archiveTask({ taskId, agentId: currentUserAgent._id });
+				archiveTask({
+					taskId,
+					agentId: currentUserAgent._id,
+					tenantId: DEFAULT_TENANT_ID,
+				});
 		}
 	};
 
@@ -152,7 +158,10 @@ const MissionQueue: React.FC<MissionQueueProps> = ({ selectedTaskId, onSelectTas
 			? `${task.title}\n\n${task.description}`
 			: task.title;
 
-		const messages = await convex.query(api.queries.listMessages, { taskId: task._id });
+			const messages = await convex.query(api.queries.listMessages, {
+				taskId: task._id,
+				tenantId: DEFAULT_TENANT_ID,
+			});
 		if (messages && messages.length > 0) {
 			const sorted = [...messages].sort((a, b) => a._creationTime - b._creationTime);
 			const thread = sorted.map(m => `[${m.agentName}]: ${m.content}`).join("\n\n");
@@ -181,7 +190,11 @@ const MissionQueue: React.FC<MissionQueueProps> = ({ selectedTaskId, onSelectTas
 			if (res.ok) {
 				const data = await res.json();
 				if (data.runId) {
-					await linkRun({ taskId, openclawRunId: data.runId });
+						await linkRun({
+							taskId,
+							openclawRunId: data.runId,
+							tenantId: DEFAULT_TENANT_ID,
+						});
 				}
 			}
 		} catch (err) {
@@ -192,7 +205,12 @@ const MissionQueue: React.FC<MissionQueueProps> = ({ selectedTaskId, onSelectTas
 	const handlePlay = async (taskId: Id<"tasks">) => {
 		if (!currentUserAgent) return;
 
-		await updateStatus({ taskId, status: "in_progress", agentId: currentUserAgent._id });
+			await updateStatus({
+				taskId,
+				status: "in_progress",
+				agentId: currentUserAgent._id,
+				tenantId: DEFAULT_TENANT_ID,
+			});
 
 		const task = tasks.find((t) => t._id === taskId);
 		if (!task) return;
@@ -204,9 +222,9 @@ const MissionQueue: React.FC<MissionQueueProps> = ({ selectedTaskId, onSelectTas
 	const displayColumns = showArchived ? [...columns, archivedColumn] : columns;
 	const archivedCount = tasks.filter((t) => t.status === "archived").length;
 
-	return (
-		<main className="[grid-area:main] bg-secondary flex flex-col overflow-hidden">
-			<div className="flex items-center justify-between px-6 py-5 bg-white border-b border-border">
+		return (
+			<main className="[grid-area:main] bg-secondary flex min-h-0 flex-col overflow-hidden">
+				<div className="shrink-0 flex items-center justify-between px-6 py-5 bg-white border-b border-border">
 				<div className="text-[11px] font-bold tracking-widest text-muted-foreground flex items-center gap-2">
 					<span className="w-1.5 h-1.5 bg-[var(--accent-orange)] rounded-full" />{" "}
 					MISSION QUEUE
@@ -243,7 +261,7 @@ const MissionQueue: React.FC<MissionQueueProps> = ({ selectedTaskId, onSelectTas
 				onDragStart={handleDragStart}
 				onDragEnd={handleDragEnd}
 			>
-				<div className={`flex-1 grid gap-px bg-border overflow-x-auto ${showArchived ? "grid-cols-6" : "grid-cols-5"}`}>
+					<div className={`flex-1 min-h-0 grid gap-px bg-border overflow-x-auto overflow-y-hidden ${showArchived ? "grid-cols-6" : "grid-cols-5"}`}>
 					{displayColumns.map((col) => (
 						<KanbanColumn
 							key={col.id}

@@ -4,6 +4,7 @@ import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { IconX, IconCheck, IconUser, IconTag, IconMessage, IconClock, IconFileText, IconCopy, IconCalendar, IconArchive, IconPlayerPlay } from "@tabler/icons-react";
 import ReactMarkdown from "react-markdown";
+import { DEFAULT_TENANT_ID } from "../lib/tenant";
 
 interface TaskDetailPanelProps {
   taskId: Id<"tasks"> | null;
@@ -30,11 +31,20 @@ const statusLabels: Record<string, string> = {
 };
 
 const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPreviewDocument }) => {
-  const tasks = useQuery(api.queries.listTasks);
-  const agents = useQuery(api.queries.listAgents);
-  const resources = useQuery(api.documents.listByTask, taskId ? { taskId } : "skip");
-  const activities = useQuery(api.queries.listActivities, taskId ? { taskId } : "skip");
-  const messages = useQuery(api.queries.listMessages, taskId ? { taskId } : "skip");
+  const tasks = useQuery(api.queries.listTasks, { tenantId: DEFAULT_TENANT_ID });
+  const agents = useQuery(api.queries.listAgents, { tenantId: DEFAULT_TENANT_ID });
+  const resources = useQuery(
+    api.documents.listByTask,
+    taskId ? { taskId, tenantId: DEFAULT_TENANT_ID } : "skip"
+  );
+  const activities = useQuery(
+    api.queries.listActivities,
+    taskId ? { taskId, tenantId: DEFAULT_TENANT_ID } : "skip"
+  );
+  const messages = useQuery(
+    api.queries.listMessages,
+    taskId ? { taskId, tenantId: DEFAULT_TENANT_ID } : "skip"
+  );
 
   const updateStatus = useMutation(api.tasks.updateStatus);
   const updateAssignees = useMutation(api.tasks.updateAssignees);
@@ -68,7 +78,12 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (currentUserAgent) {
-        updateStatus({ taskId: task._id, status: e.target.value as any, agentId: currentUserAgent._id });
+        updateStatus({
+          taskId: task._id,
+          status: e.target.value as any,
+          agentId: currentUserAgent._id,
+          tenantId: DEFAULT_TENANT_ID,
+        });
     }
   };
 
@@ -83,12 +98,22 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
     } else {
       newAssignees = [...currentAssignees, agentId];
     }
-    updateAssignees({ taskId: task._id, assigneeIds: newAssignees, agentId: currentUserAgent._id });
+    updateAssignees({
+      taskId: task._id,
+      assigneeIds: newAssignees,
+      agentId: currentUserAgent._id,
+      tenantId: DEFAULT_TENANT_ID,
+    });
   };
 
   const saveDescription = () => {
     if (currentUserAgent) {
-        updateTask({ taskId: task._id, description, agentId: currentUserAgent._id });
+        updateTask({
+          taskId: task._id,
+          description,
+          agentId: currentUserAgent._id,
+          tenantId: DEFAULT_TENANT_ID,
+        });
         setIsEditingDesc(false);
     }
   };
@@ -128,6 +153,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
       agentId: currentUserAgent._id,
       content: trimmed,
       attachments: selectedAttachmentIds,
+      tenantId: DEFAULT_TENANT_ID,
     });
     setCommentText("");
     setSelectedAttachmentIds([]);
@@ -159,13 +185,19 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
         agentId: currentUserAgent._id,
         content: trimmed,
         attachments: selectedAttachmentIds,
+        tenantId: DEFAULT_TENANT_ID,
       });
       setCommentText("");
       setSelectedAttachmentIds([]);
     }
 
     // Move task to in_progress
-    await updateStatus({ taskId: task._id, status: "in_progress", agentId: currentUserAgent._id });
+    await updateStatus({
+      taskId: task._id,
+      status: "in_progress",
+      agentId: currentUserAgent._id,
+      tenantId: DEFAULT_TENANT_ID,
+    });
 
     // Build prompt with agent context at the top
     let prompt = buildAgentPreamble();
@@ -209,7 +241,11 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
       if (res.ok) {
         const data = await res.json();
         if (data.runId) {
-          await linkRun({ taskId: task._id, openclawRunId: data.runId });
+          await linkRun({
+            taskId: task._id,
+            openclawRunId: data.runId,
+            tenantId: DEFAULT_TENANT_ID,
+          });
         }
       }
     } catch (err) {
@@ -235,6 +271,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
       path: newDocPath.trim() || undefined,
       taskId: task._id,
       agentId: currentUserAgent._id,
+      tenantId: DEFAULT_TENANT_ID,
     });
     setSelectedAttachmentIds((prev) => [...prev, docId]);
     resetNewDocForm();
@@ -303,7 +340,15 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
           <div className="flex gap-2">
             {task.status !== 'done' && task.status !== 'archived' && (
               <button
-                  onClick={() => currentUserAgent && updateStatus({ taskId: task._id, status: 'done', agentId: currentUserAgent._id })}
+                  onClick={() =>
+                    currentUserAgent &&
+                    updateStatus({
+                      taskId: task._id,
+                      status: "done",
+                      agentId: currentUserAgent._id,
+                      tenantId: DEFAULT_TENANT_ID,
+                    })
+                  }
                   disabled={!currentUserAgent}
                   className={`flex-1 py-1.5 bg-[var(--accent-green)] text-white rounded text-xs font-medium flex items-center justify-center gap-2 transition-opacity shadow-sm ${!currentUserAgent ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}`}
                   title={!currentUserAgent ? "User agent not found" : "Mark as Done"}
@@ -314,7 +359,14 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
             )}
             {task.status !== 'archived' && (
               <button
-                  onClick={() => currentUserAgent && archiveTask({ taskId: task._id, agentId: currentUserAgent._id })}
+                  onClick={() =>
+                    currentUserAgent &&
+                    archiveTask({
+                      taskId: task._id,
+                      agentId: currentUserAgent._id,
+                      tenantId: DEFAULT_TENANT_ID,
+                    })
+                  }
                   disabled={!currentUserAgent}
                   className={`${task.status === 'done' ? 'flex-1' : ''} py-1.5 px-3 bg-muted text-muted-foreground rounded text-xs font-medium flex items-center justify-center gap-2 transition-colors shadow-sm ${!currentUserAgent ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#e5e5e5]'}`}
                   title={!currentUserAgent ? "User agent not found" : "Archive Task"}

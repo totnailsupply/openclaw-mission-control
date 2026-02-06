@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
+import { DEFAULT_TENANT_ID } from "../../lib/tenant";
 
 const filters = [
   { id: "all", label: "All" },
@@ -19,10 +20,11 @@ const LiveFeedPanel: React.FC = () => {
   >(undefined);
 
   const activities = useQuery(api.queries.listActivities, {
+    tenantId: DEFAULT_TENANT_ID,
     type: selectedType === "all" ? undefined : selectedType,
     agentId: selectedAgentId,
   });
-  const agents = useQuery(api.queries.listAgents);
+  const agents = useQuery(api.queries.listAgents, { tenantId: DEFAULT_TENANT_ID });
 
   if (activities === undefined || agents === undefined) {
     return (

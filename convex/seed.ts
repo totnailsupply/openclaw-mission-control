@@ -1,5 +1,7 @@
 import { mutation } from "./_generated/server";
 
+const DEFAULT_TENANT_ID = "default";
+
 export const run = mutation({
 	args: {},
 	handler: async (ctx) => {
@@ -129,16 +131,17 @@ export const run = mutation({
 
 		const agentIds: Record<string, any> = {};
 		for (const a of agents) {
-			const id = await ctx.db.insert("agents", {
+				const id = await ctx.db.insert("agents", {
 				name: a.name,
 				role: a.role,
 				level: a.level as "LEAD" | "INT" | "SPC",
 				status: a.status as "idle" | "active" | "blocked",
 				avatar: a.avatar,
-				systemPrompt: a.systemPrompt,
-				character: a.character,
-				lore: a.lore,
-			});
+					systemPrompt: a.systemPrompt,
+					character: a.character,
+					lore: a.lore,
+					tenantId: DEFAULT_TENANT_ID,
+				});
 			agentIds[a.name] = id;
 		}
 
@@ -182,32 +185,36 @@ export const run = mutation({
 		];
 
 		for (const t of tasks) {
-			await ctx.db.insert("tasks", {
+				await ctx.db.insert("tasks", {
 				title: t.title,
 				description: t.description,
 				status: t.status as any,
-				assigneeIds: t.assignees.map((name) => agentIds[name]),
-				tags: t.tags,
-				borderColor: t.borderColor,
-			});
+					assigneeIds: t.assignees.map((name) => agentIds[name]),
+					tags: t.tags,
+					borderColor: t.borderColor,
+					tenantId: DEFAULT_TENANT_ID,
+				});
 		}
 
 		// Insert initial activities
-		await ctx.db.insert("activities", {
-			type: "commented",
-			agentId: agentIds["Quill"],
-			message: 'commented on "Write Customer Case Studies (Brent + Will)"',
-		});
-		await ctx.db.insert("activities", {
-			type: "commented",
-			agentId: agentIds["Quill"],
-			message: 'commented on "Twitter Content Blitz - 10 Tweets This Week"',
-		});
-		await ctx.db.insert("activities", {
-			type: "commented",
-			agentId: agentIds["Friday"],
-			message:
-				'commented on "Design Expansion Revenue Mechanics (SaaS Cheat Code)"',
-		});
-	},
-});
+			await ctx.db.insert("activities", {
+				type: "commented",
+				agentId: agentIds["Quill"],
+				message: 'commented on "Write Customer Case Studies (Brent + Will)"',
+				tenantId: DEFAULT_TENANT_ID,
+			});
+			await ctx.db.insert("activities", {
+				type: "commented",
+				agentId: agentIds["Quill"],
+				message: 'commented on "Twitter Content Blitz - 10 Tweets This Week"',
+				tenantId: DEFAULT_TENANT_ID,
+			});
+			await ctx.db.insert("activities", {
+				type: "commented",
+				agentId: agentIds["Friday"],
+				message:
+					'commented on "Design Expansion Revenue Mechanics (SaaS Cheat Code)"',
+				tenantId: DEFAULT_TENANT_ID,
+			});
+		},
+	});

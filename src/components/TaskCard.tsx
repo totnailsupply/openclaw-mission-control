@@ -67,7 +67,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
 						? undefined
 						: `4px solid ${task.borderColor || "transparent"}`,
 			}}
-			className={`bg-white rounded-lg p-4 shadow-sm flex flex-col gap-3 border transition-all cursor-pointer select-none ${
+				className={`min-w-0 bg-white rounded-lg p-3 sm:p-4 shadow-sm flex flex-col gap-3 border transition-all cursor-pointer select-none ${
 				isDragging ? "dragging-card" : "hover:-translate-y-0.5 hover:shadow-md"
 			} ${
 				isSelected
@@ -115,12 +115,12 @@ const TaskCard: React.FC<TaskCardProps> = ({
 					<span className="tracking-widest">...</span>
 				</div>
 			</div>
-			<h3 className="text-sm font-semibold text-foreground leading-tight">
-				{task.title}
-			</h3>
-			<p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-				{task.description}
-			</p>
+				<h3 className="text-sm font-semibold text-foreground leading-tight break-words">
+					{task.title}
+				</h3>
+				<p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 break-words">
+					{task.description}
+				</p>
 			<div className="flex justify-between items-center mt-1">
 				{task.assigneeIds && task.assigneeIds.length > 0 && (
 					<div className="flex items-center gap-1.5">

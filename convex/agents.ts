@@ -1,9 +1,20 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
 
+function assertTenant(
+	record: { tenantId?: string } | null,
+	tenantId: string,
+	entityName: string,
+) {
+	if (!record || record.tenantId !== tenantId) {
+		throw new Error(`${entityName} not found`);
+	}
+}
+
 export const updateStatus = mutation({
   args: {
     id: v.id("agents"),
+    tenantId: v.string(),
     status: v.union(
       v.literal("idle"),
       v.literal("active"),
@@ -11,8 +22,8 @@ export const updateStatus = mutation({
     ),
   },
   handler: async (ctx, args) => {
-    const agent = await ctx.db.get(args.id);
-    if (!agent) throw new Error("Agent not found");
+    const agent = await ctx.db.get("agents", args.id);
+    assertTenant(agent, args.tenantId, "Agent");
 
     await ctx.db.patch(args.id, { status: args.status });
   },
@@ -28,6 +39,7 @@ export const createAgent = mutation({
     systemPrompt: v.optional(v.string()),
     character: v.optional(v.string()),
     lore: v.optional(v.string()),
+    tenantId: v.string(),
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("agents", {
@@ -39,6 +51,7 @@ export const createAgent = mutation({
       systemPrompt: args.systemPrompt,
       character: args.character,
       lore: args.lore,
+      tenantId: args.tenantId,
     });
   },
 });
@@ -46,6 +59,7 @@ export const createAgent = mutation({
 export const updateAgent = mutation({
   args: {
     id: v.id("agents"),
+    tenantId: v.string(),
     name: v.optional(v.string()),
     role: v.optional(v.string()),
     level: v.optional(v.union(v.literal("LEAD"), v.literal("INT"), v.literal("SPC"))),
@@ -56,10 +70,10 @@ export const updateAgent = mutation({
     lore: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    const agent = await ctx.db.get(args.id);
-    if (!agent) throw new Error("Agent not found");
+    const agent = await ctx.db.get("agents", args.id);
+    assertTenant(agent, args.tenantId, "Agent");
 
-    const { id, ...updates } = args;
+    const { id, tenantId: _tenantId, ...updates } = args;
     const filteredUpdates: Record<string, any> = {};
     for (const [key, value] of Object.entries(updates)) {
       if (value !== undefined) {
@@ -72,10 +86,10 @@ export const updateAgent = mutation({
 });
 
 export const deleteAgent = mutation({
-  args: { id: v.id("agents") },
+  args: { id: v.id("agents"), tenantId: v.string() },
   handler: async (ctx, args) => {
-    const agent = await ctx.db.get(args.id);
-    if (!agent) throw new Error("Agent not found");
+    const agent = await ctx.db.get("agents", args.id);
+    assertTenant(agent, args.tenantId, "Agent");
     await ctx.db.delete(args.id);
   },
 });
