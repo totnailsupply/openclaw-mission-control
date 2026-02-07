@@ -1,7 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { Id } from "../../convex/_generated/dataModel";
 import { DEFAULT_TENANT_ID } from "../lib/tenant";
+import AvatarUploader from "./AvatarUploader";
 
 type AddAgentModalProps = {
 	onClose: () => void;
@@ -15,6 +17,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 	const [role, setRole] = useState("");
 	const [level, setLevel] = useState<"LEAD" | "INT" | "SPC">("SPC");
 	const [avatar, setAvatar] = useState("");
+	const [avatarStorageId, setAvatarStorageId] = useState<Id<"_storage"> | undefined>();
 	const [status, setStatus] = useState<"idle" | "active" | "blocked">("active");
 	const [systemPrompt, setSystemPrompt] = useState("");
 	const [character, setCharacter] = useState("");
@@ -33,6 +36,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 						role: role.trim() || "Agent",
 					level,
 					avatar: avatar.trim() || "🤖",
+					avatarStorageId,
 					status,
 						systemPrompt: systemPrompt.trim() || undefined,
 						character: character.trim() || undefined,
@@ -44,7 +48,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 				setSubmitting(false);
 			}
 		},
-		[name, role, level, avatar, status, systemPrompt, character, lore, createAgent, onCreated],
+		[name, role, level, avatar, avatarStorageId, status, systemPrompt, character, lore, createAgent, onCreated],
 	);
 
 	return (
@@ -79,13 +83,19 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 							<label className="block text-[11px] font-semibold text-muted-foreground tracking-wide mb-1.5">
 								AVATAR
 							</label>
+							<AvatarUploader
+								currentEmoji={avatar || "🤖"}
+								size="lg"
+								onUploaded={(storageId) => setAvatarStorageId(storageId)}
+							/>
 							<input
 								type="text"
 								value={avatar}
 								onChange={(e) => setAvatar(e.target.value)}
-								className="w-14 h-14 text-center text-2xl border border-border rounded-full bg-muted focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
+								className="w-14 mt-1.5 text-center text-xs border border-border rounded bg-muted focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
 								placeholder="🤖"
 								maxLength={4}
+								title="Fallback emoji"
 							/>
 						</div>
 						<div className="flex-1">

@@ -3,6 +3,8 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { DEFAULT_TENANT_ID } from "../lib/tenant";
+import AgentAvatar from "./AgentAvatar";
+import AvatarUploader from "./AvatarUploader";
 
 type AgentDetailTrayProps = {
 	agentId: Id<"agents"> | null;
@@ -20,6 +22,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 	const [editRole, setEditRole] = useState("");
 	const [editLevel, setEditLevel] = useState<"LEAD" | "INT" | "SPC">("SPC");
 	const [editAvatar, setEditAvatar] = useState("");
+	const [editAvatarStorageId, setEditAvatarStorageId] = useState<Id<"_storage"> | undefined>();
 	const [editStatus, setEditStatus] = useState<"idle" | "active" | "blocked">("active");
 	const [editSystemPrompt, setEditSystemPrompt] = useState("");
 	const [editCharacter, setEditCharacter] = useState("");
@@ -32,6 +35,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 			setEditRole(agent.role);
 			setEditLevel(agent.level);
 			setEditAvatar(agent.avatar);
+			setEditAvatarStorageId(agent.avatarStorageId ?? undefined);
 			setEditStatus(agent.status);
 			setEditSystemPrompt(agent.systemPrompt ?? "");
 			setEditCharacter(agent.character ?? "");
@@ -50,6 +54,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 				role: editRole,
 				level: editLevel,
 				avatar: editAvatar,
+				avatarStorageId: editAvatarStorageId,
 				status: editStatus,
 					systemPrompt: editSystemPrompt,
 					character: editCharacter,
@@ -60,7 +65,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 		} finally {
 			setSaving(false);
 		}
-	}, [agentId, editName, editRole, editLevel, editAvatar, editStatus, editSystemPrompt, editCharacter, editLore, updateAgent]);
+	}, [agentId, editName, editRole, editLevel, editAvatar, editAvatarStorageId, editStatus, editSystemPrompt, editCharacter, editLore, updateAgent]);
 
 	const handleCancel = useCallback(() => {
 		if (agent) {
@@ -68,6 +73,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 			setEditRole(agent.role);
 			setEditLevel(agent.level);
 			setEditAvatar(agent.avatar);
+			setEditAvatarStorageId(agent.avatarStorageId ?? undefined);
 			setEditStatus(agent.status);
 			setEditSystemPrompt(agent.systemPrompt ?? "");
 			setEditCharacter(agent.character ?? "");
@@ -102,17 +108,28 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 						{/* Avatar + Name header */}
 						<div className="flex items-center gap-4">
 							{isEditing ? (
-								<input
-									type="text"
-									value={editAvatar}
-									onChange={(e) => setEditAvatar(e.target.value)}
-									className="w-14 h-14 text-center text-2xl border border-border rounded-full bg-muted focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
-									maxLength={4}
-								/>
-							) : (
-								<div className="w-14 h-14 bg-muted rounded-full flex items-center justify-center text-2xl border border-border">
-									{agent.avatar}
+								<div className="flex flex-col items-center">
+									<AvatarUploader
+										currentAvatarUrl={agent.avatarUrl}
+										currentEmoji={editAvatar}
+										size="lg"
+										onUploaded={(storageId) => setEditAvatarStorageId(storageId)}
+									/>
+									<input
+										type="text"
+										value={editAvatar}
+										onChange={(e) => setEditAvatar(e.target.value)}
+										className="w-14 mt-1.5 text-center text-xs border border-border rounded bg-muted focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
+										maxLength={4}
+										title="Fallback emoji"
+									/>
 								</div>
+							) : (
+								<AgentAvatar
+									avatarUrl={agent.avatarUrl}
+									avatarEmoji={agent.avatar}
+									size="lg"
+								/>
 							)}
 							<div className="flex-1">
 								{isEditing ? (

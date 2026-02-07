@@ -62,6 +62,9 @@ export const listAll = query({
           ...doc,
           agentName: agent?.name ?? null,
           agentAvatar: agent?.avatar ?? null,
+          agentAvatarUrl: agent?.avatarStorageId
+            ? await ctx.storage.getUrl(agent.avatarStorageId)
+            : null,
         };
       })
     );
@@ -102,6 +105,7 @@ export const getWithContext = query({
       content: string;
       agentName: string | null;
       agentAvatar: string | null;
+      agentAvatarUrl: string | null;
       _creationTime: number;
     }> = [];
 
@@ -126,6 +130,9 @@ export const getWithContext = query({
             content: msg.content,
             agentName: msgAgent?.name ?? null,
             agentAvatar: msgAgent?.avatar ?? null,
+            agentAvatarUrl: msgAgent?.avatarStorageId
+              ? await ctx.storage.getUrl(msgAgent.avatarStorageId)
+              : null,
             _creationTime: msg._creationTime,
           };
         })
@@ -136,6 +143,9 @@ export const getWithContext = query({
       ...document,
       agentName: agent?.name ?? null,
       agentAvatar: agent?.avatar ?? null,
+      agentAvatarUrl: agent?.avatarStorageId
+        ? await ctx.storage.getUrl(agent.avatarStorageId)
+        : null,
       agentRole: agent?.role ?? null,
       taskTitle: task?.title ?? null,
       taskStatus: task?.status ?? null,

@@ -122,9 +122,15 @@ const ConversationTray: React.FC<ConversationTrayProps> = ({
                     className="p-3 bg-secondary border border-border rounded-lg"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
-                      {msg.agentAvatar && (
+                      {msg.agentAvatarUrl ? (
+                        <img
+                          src={msg.agentAvatarUrl}
+                          alt="avatar"
+                          className="w-5 h-5 rounded-full object-cover"
+                        />
+                      ) : msg.agentAvatar ? (
                         <span className="text-lg">{msg.agentAvatar}</span>
-                      )}
+                      ) : null}
                       <span className="text-xs font-semibold text-[var(--accent-orange)]">
                         {msg.agentName}
                       </span>

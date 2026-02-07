@@ -278,7 +278,10 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
     setIsAddingDoc(false);
   };
 
-  const renderAvatar = (avatar?: string) => {
+  const renderAvatar = (avatar?: string, avatarUrl?: string | null) => {
+    if (avatarUrl) {
+      return <img src={avatarUrl} className="w-full h-full object-cover rounded-full" alt="avatar" />;
+    }
     if (!avatar) return <IconUser size={10} />;
     const isUrl = avatar.startsWith("http") || avatar.startsWith("data:");
     if (isUrl) {
@@ -445,7 +448,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
               return (
                 <div key={id} className="flex items-center gap-1.5 px-2 py-1 bg-white border border-border rounded-full shadow-sm">
                   <div className="w-4 h-4 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-                     {renderAvatar(agent?.avatar)}
+                     {renderAvatar(agent?.avatar, agent?.avatarUrl)}
                   </div>
                   <span className="text-xs font-medium text-foreground">{agent?.name || "Unknown"}</span>
                   <button 
@@ -475,7 +478,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
                     className="w-full text-left px-2 py-1.5 text-xs hover:bg-muted rounded flex items-center gap-2"
                    >
                      <div className="w-4 h-4 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-                        {renderAvatar(agent.avatar)}
+                        {renderAvatar(agent.avatar, agent.avatarUrl)}
                      </div>
                      {agent.name}
                    </button>
@@ -533,7 +536,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
               {sortedMessages.map((msg) => (
                 <div key={msg._id} className="flex gap-2 p-2.5 bg-white border border-border rounded">
                   <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center overflow-hidden shrink-0">
-                    {renderAvatar(msg.agentAvatar)}
+                    {renderAvatar(msg.agentAvatar, msg.agentAvatarUrl)}
                   </div>
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center justify-between text-[11px] text-muted-foreground">

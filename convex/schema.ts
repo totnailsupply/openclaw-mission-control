@@ -14,6 +14,7 @@ export default defineSchema({
 		),
 		level: v.union(v.literal("LEAD"), v.literal("INT"), v.literal("SPC")),
 		avatar: v.string(),
+		avatarStorageId: v.optional(v.id("_storage")),
 		currentTaskId: v.optional(v.id("tasks")),
 		sessionKey: v.optional(v.string()),
 		systemPrompt: v.optional(v.string()),

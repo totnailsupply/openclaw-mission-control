@@ -16,10 +16,19 @@ export const listAgents = query({
 		tenantId: v.string(),
 	},
 	handler: async (ctx, args) => {
-		return await ctx.db
+		const agents = await ctx.db
 			.query("agents")
 			.withIndex("by_tenant", (q) => q.eq("tenantId", args.tenantId))
 			.collect();
+
+		return Promise.all(
+			agents.map(async (agent) => ({
+				...agent,
+				avatarUrl: agent.avatarStorageId
+					? await ctx.storage.getUrl(agent.avatarStorageId)
+					: null,
+			})),
+		);
 	},
 });
 
@@ -145,6 +154,9 @@ export const listMessages = query({
                     ...msg,
                     agentName: agent?.name ?? "Unknown",
                     agentAvatar: agent?.avatar,
+                    agentAvatarUrl: agent?.avatarStorageId
+                        ? await ctx.storage.getUrl(agent.avatarStorageId)
+                        : null,
                 };
             })
         );
