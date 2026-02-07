@@ -13,7 +13,11 @@ export const markDispatched = mutation({
 		if (!task || task.tenantId !== args.tenantId) {
 			throw new Error("Task not found");
 		}
-		await ctx.db.patch(args.taskId, { dispatchedAt: Date.now() });
+		await ctx.db.patch(args.taskId, {
+			dispatchedAt: Date.now(),
+			status: "in_progress",
+			startedAt: Date.now(),
+		});
 	},
 });
 
