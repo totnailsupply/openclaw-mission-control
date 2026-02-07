@@ -55,7 +55,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
   const linkRun = useMutation(api.tasks.linkRun);
 
   const task = tasks?.find((t) => t._id === taskId);
-  const currentUserAgent = agents?.find(a => a.name === "Manish");
+  const currentUserAgent = agents?.find(a => a.name === "Scrappy") ?? agents?.[0];
   
   const [description, setDescription] = useState("");
   const [isEditingDesc, setIsEditingDesc] = useState(false);

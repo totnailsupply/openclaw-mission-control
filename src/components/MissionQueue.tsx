@@ -73,7 +73,7 @@ const MissionQueue: React.FC<MissionQueueProps> = ({ selectedTaskId, onSelectTas
 	const convex = useConvex();
 	const [activeTask, setActiveTask] = useState<Task | null>(null);
 
-	const currentUserAgent = agents?.find(a => a.name === "Manish");
+	const currentUserAgent = agents?.find(a => a.name === "Scrappy") ?? agents?.[0];
 
 	const sensors = useSensors(
 		useSensor(PointerSensor, {
