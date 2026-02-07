@@ -17,7 +17,7 @@ const UNAUTHORIZED = new Response(
  * Returns true if the token is valid and not revoked.
  */
 async function validateToken(
-	ctx: { runQuery: typeof import("./_generated/server").httpAction extends (fn: (ctx: infer C, ...args: any[]) => any) => any ? C["runQuery"] : never },
+	ctx: { runQuery: any },
 	request: Request,
 ): Promise<boolean> {
 	const authHeader = request.headers.get("Authorization");
