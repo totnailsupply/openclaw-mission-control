@@ -9,7 +9,9 @@
  */
 
 import type * as agents from "../agents.js";
+import type * as apiAuth from "../apiAuth.js";
 import type * as auth from "../auth.js";
+import type * as dispatcher from "../dispatcher.js";
 import type * as documents from "../documents.js";
 import type * as fix_loki from "../fix_loki.js";
 import type * as http from "../http.js";
@@ -27,7 +29,9 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   agents: typeof agents;
+  apiAuth: typeof apiAuth;
   auth: typeof auth;
+  dispatcher: typeof dispatcher;
   documents: typeof documents;
   fix_loki: typeof fix_loki;
   http: typeof http;

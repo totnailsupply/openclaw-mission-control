@@ -112,7 +112,6 @@ export const listActivities = query({
 			const enrichedFeed = await Promise.all(
 				activities.map(async (activity) => {
 					const agent = await ctx.db.get("agents", activity.agentId);
-					assertTenant(agent, args.tenantId, "Agent");
 					return {
 						...activity,
 						agentName: agent?.name ?? "Unknown Agent",
