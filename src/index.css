@@ -2,38 +2,39 @@
 @import "tailwindcss";
 
 :root {
-	--background: oklch(0.99 0 0);
-	--foreground: oklch(0 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0 0 0);
-	--popover: oklch(0.99 0 0);
-	--popover-foreground: oklch(0 0 0);
-	--primary: oklch(0 0 0);
-	--primary-foreground: oklch(1 0 0);
-	--secondary: oklch(0.94 0 0);
-	--secondary-foreground: oklch(0 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.44 0 0);
-	--accent: oklch(0.94 0 0);
-	--accent-foreground: oklch(0 0 0);
-	--destructive: oklch(0.63 0.19 23.03);
-	--destructive-foreground: oklch(1 0 0);
-	--border: oklch(0.92 0 0);
-	--input: oklch(0.94 0 0);
-	--ring: oklch(0 0 0);
-	--chart-1: oklch(0.81 0.17 75.35);
-	--chart-2: oklch(0.55 0.22 264.53);
-	--chart-3: oklch(0.72 0 0);
-	--chart-4: oklch(0.92 0 0);
-	--chart-5: oklch(0.56 0 0);
-	--sidebar: oklch(0.99 0 0);
-	--sidebar-foreground: oklch(0 0 0);
-	--sidebar-primary: oklch(0 0 0);
-	--sidebar-primary-foreground: oklch(1 0 0);
-	--sidebar-accent: oklch(0.94 0 0);
-	--sidebar-accent-foreground: oklch(0 0 0);
-	--sidebar-border: oklch(0.94 0 0);
-	--sidebar-ring: oklch(0 0 0);
+	/* Dark crypto theme colors */
+	--background: #0a0b0d;
+	--foreground: #d1d5db;
+	--card: #13151a;
+	--card-foreground: #d1d5db;
+	--popover: #13151a;
+	--popover-foreground: #d1d5db;
+	--primary: #3b82f6;
+	--primary-foreground: #ffffff;
+	--secondary: #1a1c23;
+	--secondary-foreground: #d1d5db;
+	--muted: #1a1c23;
+	--muted-foreground: #6b7280;
+	--accent: #1f2128;
+	--accent-foreground: #d1d5db;
+	--destructive: #ef4444;
+	--destructive-foreground: #ffffff;
+	--border: #1f2128;
+	--input: #1a1c23;
+	--ring: #3b82f6;
+	--chart-1: #3b82f6;
+	--chart-2: #8b5cf6;
+	--chart-3: #ec4899;
+	--chart-4: #f59e0b;
+	--chart-5: #10b981;
+	--sidebar: #0f1015;
+	--sidebar-foreground: #d1d5db;
+	--sidebar-primary: #3b82f6;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: #1a1c23;
+	--sidebar-accent-foreground: #d1d5db;
+	--sidebar-border: #1f2128;
+	--sidebar-ring: #3b82f6;
 	--font-sans: "Outfit", Geist, sans-serif;
 	--font-serif: Georgia, serif;
 	--font-mono: Geist Mono, monospace;
@@ -43,16 +44,16 @@
 	--header-height: 80px;
 	--sidebar-left-width: 280px;
 	--sidebar-right-width: 320px;
-	--accent-orange: #ff9f43;
-	--accent-blue: #54a0ff;
-	--accent-green: #1dd1a1;
-	--accent-red: #ee5253;
-	--accent-brown: #833471;
-	--status-working: #1dd1a1;
-	--status-lead: #ff9f43;
-	--status-int: #54a0ff;
-	--status-spc: #833471;
-	--card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	--accent-orange: #f59e0b;
+	--accent-blue: #3b82f6;
+	--accent-green: #10b981;
+	--accent-red: #ef4444;
+	--accent-brown: #8b5cf6;
+	--status-working: #10b981;
+	--status-lead: #f59e0b;
+	--status-int: #3b82f6;
+	--status-spc: #8b5cf6;
+	--card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
 	--shadow-x: 0px;
 	--shadow-y: 1px;
@@ -265,12 +266,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-	background: oklch(0.9 0 0);
+	background: #27272a;
 	border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: oklch(0.8 0 0);
+	background: #3f3f46;
 }
 
 /* Agent Detail Tray */
@@ -280,7 +281,7 @@
 	left: var(--sidebar-left-width);
 	bottom: 0;
 	width: 380px;
-	background: white;
+	background: var(--card);
 	border-right: 1px solid var(--border);
 	box-shadow: var(--shadow-lg);
 	transform: translateX(-100%);
@@ -328,7 +329,7 @@
 	right: 0;
 	bottom: 0;
 	width: 400px;
-	background: white;
+	background: var(--card);
 	border-left: 1px solid var(--border);
 	box-shadow: var(--shadow-lg);
 	transform: translateX(100%);

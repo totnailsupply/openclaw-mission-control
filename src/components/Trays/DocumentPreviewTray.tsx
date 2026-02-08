@@ -150,7 +150,7 @@ const DocumentPreviewTray: React.FC<DocumentPreviewTrayProps> = ({
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto bg-white">{renderContent()}</div>
+        <div className="flex-1 overflow-y-auto bg-card">{renderContent()}</div>
 
         {/* Footer with metadata */}
         <div className="px-4 py-2 border-t border-border bg-muted/30 text-[10px] text-muted-foreground flex items-center gap-4">

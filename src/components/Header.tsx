@@ -3,6 +3,7 @@ import SignOutButton from "./Signout";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { DEFAULT_TENANT_ID } from "../lib/tenant";
+import TokenUsageWidget from "./TokenUsageWidget";
 
 type HeaderProps = {
 	onOpenAgents?: () => void;
@@ -45,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenAgents, onOpenLiveFeed }) => {
 	};
 
 	return (
-		<header className="[grid-area:header] flex items-center justify-between px-3 md:px-6 bg-white border-b border-border z-10">
+		<header className="[grid-area:header] flex items-center justify-between px-3 md:px-6 bg-card border-b border-border z-10">
 			<div className="flex items-center gap-2 md:gap-4 min-w-0">
 				<div className="flex md:hidden items-center gap-2">
 					<button
@@ -86,6 +87,8 @@ const Header: React.FC<HeaderProps> = ({ onOpenAgents, onOpenLiveFeed }) => {
 						TASKS IN QUEUE
 					</div>
 				</div>
+				<div className="w-px h-8 bg-border" />
+				<TokenUsageWidget />
 			</div>
 
 			<div className="flex items-center gap-2 md:gap-6">
@@ -105,8 +108,8 @@ const Header: React.FC<HeaderProps> = ({ onOpenAgents, onOpenLiveFeed }) => {
 						{formatDate(time)}
 					</div>
 				</div>
-				<div className="flex items-center gap-2 bg-[#e6fcf5] text-[#0ca678] px-3 py-1.5 rounded-full text-[11px] font-bold tracking-[0.5px]">
-					<span className="w-2 h-2 bg-[#0ca678] rounded-full" />
+				<div className="flex items-center gap-2 bg-green-500/10 text-green-400 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-[0.5px]">
+					<span className="w-2 h-2 bg-green-400 rounded-full" />
 					ONLINE
 				</div>
 				<SignOutButton />

@@ -137,7 +137,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 										type="text"
 										value={editName}
 										onChange={(e) => setEditName(e.target.value)}
-										className="w-full text-lg font-bold text-foreground border border-border rounded-lg px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
+										className="w-full text-lg font-bold text-foreground border border-border rounded-lg px-2 py-1 bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
 									/>
 								) : (
 									<div className="text-lg font-bold text-foreground">{agent.name}</div>
@@ -147,7 +147,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 										type="text"
 										value={editRole}
 										onChange={(e) => setEditRole(e.target.value)}
-										className="w-full text-xs text-muted-foreground border border-border rounded-lg px-2 py-1 mt-1 bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
+										className="w-full text-xs text-muted-foreground border border-border rounded-lg px-2 py-1 mt-1 bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
 									/>
 								) : (
 									<div className="text-xs text-muted-foreground">{agent.role}</div>
@@ -188,7 +188,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 								<select
 									value={editStatus}
 									onChange={(e) => setEditStatus(e.target.value as "idle" | "active" | "blocked")}
-									className="text-[10px] font-bold px-2 py-1 rounded border border-border bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
+									className="text-[10px] font-bold px-2 py-1 rounded border border-border bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
 								>
 									<option value="active">Active</option>
 									<option value="idle">Idle</option>
@@ -227,7 +227,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 								<textarea
 									value={editSystemPrompt}
 									onChange={(e) => setEditSystemPrompt(e.target.value)}
-									className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
+									className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
 									rows={4}
 								/>
 							) : (
@@ -246,7 +246,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 								<textarea
 									value={editCharacter}
 									onChange={(e) => setEditCharacter(e.target.value)}
-									className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
+									className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
 									rows={4}
 								/>
 							) : (
@@ -265,7 +265,7 @@ const AgentDetailTray: React.FC<AgentDetailTrayProps> = ({ agentId, onClose }) =
 								<textarea
 									value={editLore}
 									onChange={(e) => setEditLore(e.target.value)}
-									className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
+									className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
 									rows={4}
 								/>
 							) : (

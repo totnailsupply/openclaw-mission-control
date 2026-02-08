@@ -111,8 +111,8 @@ const DocumentsPanel: React.FC<DocumentsPanelProps> = ({
             onClick={() => setSelectedAgentId(undefined)}
             className={`text-[10px] font-semibold px-2.5 py-1 rounded-full border cursor-pointer transition-colors ${
               selectedAgentId === undefined
-                ? "border-[var(--accent-orange)] text-[var(--accent-orange)] bg-white"
-                : "border-border bg-white text-muted-foreground hover:bg-muted/50"
+                ? "border-[var(--accent-orange)] text-[var(--accent-orange)] bg-card"
+                : "border-border bg-card text-muted-foreground hover:bg-muted/50"
             }`}
           >
             All Agents
@@ -123,8 +123,8 @@ const DocumentsPanel: React.FC<DocumentsPanelProps> = ({
               onClick={() => setSelectedAgentId(a._id)}
               className={`text-[10px] font-semibold px-2.5 py-1 rounded-full border cursor-pointer flex items-center gap-1 transition-colors ${
                 selectedAgentId === a._id
-                  ? "border-[var(--accent-orange)] text-[var(--accent-orange)] bg-white"
-                  : "border-border bg-white text-muted-foreground hover:bg-muted/50"
+                  ? "border-[var(--accent-orange)] text-[var(--accent-orange)] bg-card"
+                  : "border-border bg-card text-muted-foreground hover:bg-muted/50"
               }`}
             >
               {a.name}

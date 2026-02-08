@@ -59,7 +59,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 		>
 			<div className="absolute inset-0 bg-black/40" />
 			<div
-				className="relative bg-white rounded-xl border border-border shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto"
+				className="relative bg-card rounded-xl border border-border shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto"
 				onClick={(e) => e.stopPropagation()}
 			>
 				<div className="flex items-center justify-between px-6 py-4 border-b border-border">
@@ -106,7 +106,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 								type="text"
 								value={name}
 								onChange={(e) => setName(e.target.value)}
-								className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
+								className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
 								placeholder="e.g. Nova"
 								required
 								autoFocus
@@ -123,7 +123,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 							type="text"
 							value={role}
 							onChange={(e) => setRole(e.target.value)}
-							className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
+							className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
 							placeholder="e.g. QA Engineer, Growth Hacker, DevOps"
 						/>
 					</div>
@@ -137,7 +137,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 							<select
 								value={level}
 								onChange={(e) => setLevel(e.target.value as "LEAD" | "INT" | "SPC")}
-								className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
+								className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
 							>
 								<option value="LEAD">LEAD</option>
 								<option value="INT">INT</option>
@@ -151,7 +151,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 							<select
 								value={status}
 								onChange={(e) => setStatus(e.target.value as "idle" | "active" | "blocked")}
-								className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
+								className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent"
 							>
 								<option value="active">Active</option>
 								<option value="idle">Idle</option>
@@ -168,7 +168,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 						<textarea
 							value={systemPrompt}
 							onChange={(e) => setSystemPrompt(e.target.value)}
-							className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
+							className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
 							placeholder="e.g. You are a QA specialist. Test features thoroughly, write bug reports, and ensure quality standards are met."
 							rows={3}
 						/>
@@ -182,7 +182,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 						<textarea
 							value={character}
 							onChange={(e) => setCharacter(e.target.value)}
-							className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
+							className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
 							placeholder="e.g. Detail-oriented, methodical, and relentless about edge cases. Finds bugs others miss."
 							rows={3}
 						/>
@@ -196,7 +196,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ onClose, onCreated }) => 
 						<textarea
 							value={lore}
 							onChange={(e) => setLore(e.target.value)}
-							className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
+							className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent resize-none"
 							placeholder="e.g. Built from years of QA experience across startups. Has a sixth sense for regression bugs."
 							rows={3}
 						/>

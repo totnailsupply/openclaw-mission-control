@@ -30,15 +30,15 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({
 				isOver ? "drop-zone-active" : ""
 			}`}
 		>
-			<div className="flex shrink-0 items-center gap-2 px-4 py-3 bg-[#f8f9fa] border-b border-border">
+			<div className="flex shrink-0 items-center gap-2 px-4 py-3 bg-muted border-b border-border">
 				<span
 					className="w-2 h-2 rounded-full"
 					style={{ backgroundColor: column.color }}
 				/>
-				<span className="text-[10px] font-bold text-muted-foreground flex-1 uppercase tracking-tighter">
+				<span className="text-[10px] font-bold text-foreground flex-1 uppercase tracking-tighter">
 					{column.label}
 				</span>
-				<span className="text-[10px] text-muted-foreground bg-border px-1.5 py-0.25 rounded-full">
+				<span className="text-[10px] text-muted-foreground bg-accent px-1.5 py-0.25 rounded-full">
 					{taskCount}
 				</span>
 			</div>

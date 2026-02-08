@@ -11,6 +11,7 @@
 import type * as agents from "../agents.js";
 import type * as apiAuth from "../apiAuth.js";
 import type * as auth from "../auth.js";
+import type * as crons from "../crons.js";
 import type * as dispatcher from "../dispatcher.js";
 import type * as documents from "../documents.js";
 import type * as fix_loki from "../fix_loki.js";
@@ -20,6 +21,7 @@ import type * as openclaw from "../openclaw.js";
 import type * as queries from "../queries.js";
 import type * as seed from "../seed.js";
 import type * as tasks from "../tasks.js";
+import type * as tokenUsage from "../tokenUsage.js";
 
 import type {
   ApiFromModules,
@@ -31,6 +33,7 @@ declare const fullApi: ApiFromModules<{
   agents: typeof agents;
   apiAuth: typeof apiAuth;
   auth: typeof auth;
+  crons: typeof crons;
   dispatcher: typeof dispatcher;
   documents: typeof documents;
   fix_loki: typeof fix_loki;
@@ -40,6 +43,7 @@ declare const fullApi: ApiFromModules<{
   queries: typeof queries;
   seed: typeof seed;
   tasks: typeof tasks;
+  tokenUsage: typeof tokenUsage;
 }>;
 
 /**

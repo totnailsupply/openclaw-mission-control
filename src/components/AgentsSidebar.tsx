@@ -26,7 +26,7 @@ const AgentsSidebar: React.FC<AgentsSidebarProps> = ({
 	if (agents === undefined) {
 		return (
 			<aside
-				className={`[grid-area:left-sidebar] sidebar-drawer sidebar-drawer--left bg-white border-r border-border flex flex-col overflow-hidden animate-pulse ${isOpen ? "is-open" : ""}`}
+				className={`[grid-area:left-sidebar] sidebar-drawer sidebar-drawer--left bg-card border-r border-border flex flex-col overflow-hidden animate-pulse ${isOpen ? "is-open" : ""}`}
 				aria-label="Agents"
 			>
 				<div className="px-6 py-5 border-b border-border h-[65px] bg-muted/20" />
@@ -47,7 +47,7 @@ const AgentsSidebar: React.FC<AgentsSidebarProps> = ({
 
 	return (
 		<aside
-			className={`[grid-area:left-sidebar] sidebar-drawer sidebar-drawer--left bg-white border-r border-border flex flex-col overflow-hidden ${isOpen ? "is-open" : ""}`}
+			className={`[grid-area:left-sidebar] sidebar-drawer sidebar-drawer--left bg-card border-r border-border flex flex-col overflow-hidden ${isOpen ? "is-open" : ""}`}
 			aria-label="Agents"
 		>
 			<div className="flex items-center justify-between px-6 py-5 border-b border-border">
@@ -117,7 +117,7 @@ const AgentsSidebar: React.FC<AgentsSidebarProps> = ({
 							avatarUrl={agent.avatarUrl}
 							avatarEmoji={agent.avatar}
 							size="md"
-							className="group-hover:bg-white transition-colors"
+							className="group-hover:bg-card transition-colors"
 						/>
 						<div className="flex-1">
 							<div className="flex items-center gap-1.5 mb-0.5">

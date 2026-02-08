@@ -112,6 +112,8 @@ export default defineSchema({
 		tenantId: v.string(),
 		retentionDays: v.number(),
 		onboardingCompletedAt: v.optional(v.number()),
+		dailyBudgetCents: v.optional(v.number()),
+		monthlyBudgetCents: v.optional(v.number()),
 		createdAt: v.number(),
 		updatedAt: v.number(),
 	}).index("by_tenant", ["tenantId"]),
@@ -121,4 +123,28 @@ export default defineSchema({
 		windowStartMs: v.number(),
 		count: v.number(),
 	}).index("by_tenant", ["tenantId"]),
+	tokenUsage: defineTable({
+		date: v.string(),
+		costCents: v.number(),
+		inputTokens: v.number(),
+		cacheReadTokens: v.number(),
+		outputTokens: v.number(),
+		cacheCreationTokens: v.number(),
+		fetchedAt: v.number(),
+		tenantId: v.optional(v.string()),
+	})
+		.index("by_date", ["date"])
+		.index("by_tenant_date", ["tenantId", "date"]),
+	tokenUsageHourly: defineTable({
+		timestamp: v.string(),
+		costCents: v.number(),
+		inputTokens: v.number(),
+		cacheReadTokens: v.number(),
+		outputTokens: v.number(),
+		cacheCreationTokens: v.number(),
+		fetchedAt: v.number(),
+		tenantId: v.optional(v.string()),
+	})
+		.index("by_timestamp", ["timestamp"])
+		.index("by_tenant_timestamp", ["tenantId", "timestamp"]),
 });

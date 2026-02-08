@@ -67,7 +67,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
 						? undefined
 						: `4px solid ${task.borderColor || "transparent"}`,
 			}}
-				className={`min-w-0 bg-white rounded-lg p-3 sm:p-4 shadow-sm flex flex-col gap-3 border transition-all cursor-pointer select-none ${
+				className={`min-w-0 bg-card rounded-lg p-3 sm:p-4 shadow-sm flex flex-col gap-3 border transition-all cursor-pointer select-none ${
 				isDragging ? "dragging-card" : "hover:-translate-y-0.5 hover:shadow-md"
 			} ${
 				isSelected

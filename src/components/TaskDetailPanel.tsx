@@ -303,7 +303,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
   const lastUpdated = lastUpdatedActivity ? lastUpdatedActivity._creationTime : null;
 
   return (
-    <div className="fixed inset-y-0 right-0 w-[380px] bg-white border-l border-border shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col z-50">
+    <div className="fixed inset-y-0 right-0 w-[380px] bg-card border-l border-border shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col z-50">
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-[#f8f9fa]">
         <div className="flex items-center gap-2">
@@ -415,7 +415,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full min-h-[90px] p-2.5 text-sm border border-border rounded bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
+                className="w-full min-h-[90px] p-2.5 text-sm border border-border rounded bg-card text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
               />
               <div className="flex justify-end gap-2">
                 <button 
@@ -446,7 +446,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
             {task.assigneeIds?.map(id => {
               const agent = agents?.find(a => a._id === id);
               return (
-                <div key={id} className="flex items-center gap-1.5 px-2 py-1 bg-white border border-border rounded-full shadow-sm">
+                <div key={id} className="flex items-center gap-1.5 px-2 py-1 bg-card border border-border rounded-full shadow-sm">
                   <div className="w-4 h-4 rounded-full bg-muted flex items-center justify-center overflow-hidden">
                      {renderAvatar(agent?.avatar, agent?.avatarUrl)}
                   </div>
@@ -464,13 +464,13 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
             <div className="relative group">
               <button
                 disabled={!currentUserAgent}
-                className="flex items-center gap-1 px-2 py-1 bg-muted border border-transparent rounded-full text-[11px] text-muted-foreground hover:bg-white hover:border-border transition-all disabled:opacity-50"
+                className="flex items-center gap-1 px-2 py-1 bg-muted border border-transparent rounded-full text-[11px] text-muted-foreground hover:bg-card hover:border-border transition-all disabled:opacity-50"
               >
                 <span>+ Add</span>
               </button>
               
               {/* Dropdown for adding agents - simplified for now */}
-              <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-border shadow-lg rounded-lg hidden group-hover:block z-10 p-1">
+              <div className="absolute top-full left-0 mt-1 w-48 bg-card border border-border shadow-lg rounded-lg hidden group-hover:block z-10 p-1">
                  {agents?.filter(a => !task.assigneeIds?.includes(a._id)).map(agent => (
                    <button 
                     key={agent._id}
@@ -497,7 +497,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
                 <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Resources / Deliverables</label>
                 <div className="space-y-1">
                     {resources.map((doc) => (
-                        <div key={doc._id} onClick={() => onPreviewDocument?.(doc._id)} className="flex items-center justify-between p-1.5 bg-white border border-border rounded text-sm hover:bg-muted transition-colors cursor-pointer">
+                        <div key={doc._id} onClick={() => onPreviewDocument?.(doc._id)} className="flex items-center justify-between p-1.5 bg-card border border-border rounded text-sm hover:bg-muted transition-colors cursor-pointer">
                             <div className="flex items-center gap-2 overflow-hidden">
                                 <IconFileText size={14} className="text-muted-foreground shrink-0" />
                                 <div className="flex flex-col min-w-0">
@@ -534,7 +534,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
           {sortedMessages.length > 0 && (
             <div className="space-y-2.5">
               {sortedMessages.map((msg) => (
-                <div key={msg._id} className="flex gap-2 p-2.5 bg-white border border-border rounded">
+                <div key={msg._id} className="flex gap-2 p-2.5 bg-card border border-border rounded">
                   <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center overflow-hidden shrink-0">
                     {renderAvatar(msg.agentAvatar, msg.agentAvatarUrl)}
                   </div>
@@ -586,7 +586,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
                     className={`text-[10px] px-2 py-0.5 rounded border transition-colors ${
                       isSelected
                         ? "bg-[var(--accent-blue)] text-white border-[var(--accent-blue)]"
-                        : "bg-white text-muted-foreground border-border hover:bg-muted"
+                        : "bg-card text-muted-foreground border-border hover:bg-muted"
                     } disabled:opacity-50`}
                   >
                     {doc.title}
@@ -627,27 +627,27 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
                   value={newDocTitle}
                   onChange={(e) => setNewDocTitle(e.target.value)}
                   placeholder="Document title"
-                  className="w-full p-2 text-xs border border-border rounded bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
+                  className="w-full p-2 text-xs border border-border rounded bg-card text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
                 />
                 <div className="flex gap-2">
                   <input
                     value={newDocType}
                     onChange={(e) => setNewDocType(e.target.value)}
                     placeholder="Type (note, spec, link)"
-                    className="flex-1 p-2 text-xs border border-border rounded bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
+                    className="flex-1 p-2 text-xs border border-border rounded bg-card text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
                   />
                   <input
                     value={newDocPath}
                     onChange={(e) => setNewDocPath(e.target.value)}
                     placeholder="Path (optional)"
-                    className="flex-1 p-2 text-xs border border-border rounded bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
+                    className="flex-1 p-2 text-xs border border-border rounded bg-card text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
                   />
                 </div>
                 <textarea
                   value={newDocContent}
                   onChange={(e) => setNewDocContent(e.target.value)}
                   placeholder="Content (optional)"
-                  className="w-full min-h-[70px] p-2 text-xs border border-border rounded bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
+                  className="w-full min-h-[70px] p-2 text-xs border border-border rounded bg-card text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
                 />
                 <div className="flex justify-end gap-2">
                   <button
@@ -677,7 +677,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ taskId, onClose, onPr
               onChange={(e) => setCommentText(e.target.value)}
               placeholder={currentUserAgent ? "Write a comment..." : "Sign in as an agent to comment"}
               disabled={!currentUserAgent}
-              className="w-full min-h-[80px] p-2.5 text-sm border border-border rounded bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)] disabled:opacity-50"
+              className="w-full min-h-[80px] p-2.5 text-sm border border-border rounded bg-card text-foreground focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)] disabled:opacity-50"
             />
             <div className="flex justify-end gap-2">
               <button
